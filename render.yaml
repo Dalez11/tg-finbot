@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: tg-finbot
+    env: python
+    buildCommand: ""
+    startCommand: python main.py
+    autoDeploy: true
