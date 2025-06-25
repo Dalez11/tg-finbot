@@ -1,11 +1,12 @@
+import os
 import requests
 import random
 import asyncio
 from telegram import Bot
 
-# === НАСТРОЙКИ ===
-OPENROUTER_API_KEY = "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"
-TG_BOT_TOKEN = "7606314440:AAETavE1_4kSMDjS2lBbD9DggimF0iHBsyI"
+# === БЕРЁМ КЛЮЧИ ИЗ ПЕРЕМЕННЫХ ОКРУЖЕНИЯ ===
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
+TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN")
 TG_CHANNEL = "@fin_geniuss"
 
 bot = Bot(token=TG_BOT_TOKEN)
@@ -29,14 +30,8 @@ def generate_title():
     payload = {
         "model": "openai/gpt-3.5-turbo-16k",
         "messages": [
-            {
-                "role": "system",
-                "content": "Ты эксперт в маркетинге и копирайтинге."
-            },
-            {
-                "role": "user",
-                "content": "Придумай уникальный и интересный заголовок для короткой статьи на тему личных финансов, инвестиций или мышления богатых. Не повторяйся. Коротко и цепляюще."
-            }
+            {"role": "system", "content": "Ты эксперт в маркетинге и копирайтинге."},
+            {"role": "user", "content": "Придумай уникальный и интересный заголовок для короткой статьи на тему личных финансов, инвестиций или мышления богатых. Не повторяйся. Коротко и цепляюще."}
         ],
         "temperature": 0.9
     }
@@ -60,14 +55,8 @@ def generate_article(title):
     payload = {
         "model": "openai/gpt-3.5-turbo-16k",
         "messages": [
-            {
-                "role": "system",
-                "content": "Ты профессиональный копирайтер по финансовой тематике."
-            },
-            {
-                "role": "user",
-                "content": f"Напиши короткую статью на тему: {title}. Максимум 900 символов. Без повторов и клише."
-            }
+            {"role": "system", "content": "Ты профессиональный копирайтер по финансовой тематике."},
+            {"role": "user", "content": f"Напиши короткую статью на тему: {title}. Максимум 900 символов. Без повторов и клише."}
         ],
         "temperature": 0.7
     }
